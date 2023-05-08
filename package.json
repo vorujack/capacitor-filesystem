@@ -7,10 +7,8 @@
   "types": "dist/esm/index.d.ts",
   "unpkg": "dist/plugin.js",
   "files": [
-    "android/src/main/",
-    "android/build.gradle",
+    "electron/",
     "dist/",
-    "ios/Plugin/",
     "VorujackCapacitorFilesystem.podspec"
   ],
   "author": "Vorujack",
@@ -38,7 +36,8 @@
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
     "docgen": "docgen --api FilesystemPlugin --output-readme README.md --output-json dist/docs.json",
-    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
+    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js && npm run build-electron",
+    "build-electron": "tsc --project electron/tsconfig.json && rollup -c electron/rollup.config.js && rimraf ./electron/build",
     "clean": "rimraf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
@@ -68,11 +67,8 @@
     "extends": "@ionic/eslint-config/recommended"
   },
   "capacitor": {
-    "ios": {
-      "src": "ios"
-    },
-    "android": {
-      "src": "android"
+    "electron": {
+      "src": "electron"
     }
   }
 }
